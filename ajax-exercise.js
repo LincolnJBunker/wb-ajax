@@ -33,10 +33,27 @@ document.querySelector('#weather-button').addEventListener('click', showWeather)
 
 // PART 3: Order Cookies
 
-function orderCookies(evt) {
+async function orderCookies(evt) {
   // TODO: Need to preventDefault here, because we're listening for a submit event!
+  evt.preventDefault();
   // TODO: show the result message after your form
+  const cookieType = document.querySelector("#cookie-type-field").value;
+  const qty = document.querySelector("#qty-field").value;
+  const response = await axios.post(
+    '/order-cookies.json',
+    { 
+      cookieType: cookieType, 
+      qty: qty 
+    }
+  );
   // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
+  const orderStatus = document.querySelector("#order-status")
+  orderStatus.innerText = response.data.message;
+  if (response.data.resultCode === 'ERROR'){
+    orderStatus.classList.add('order-error');
+  } else {
+    orderStatus.classList.remove('order-error')
+  }
 }
 document.querySelector('#order-form').addEventListener('submit', orderCookies);
 
