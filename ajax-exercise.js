@@ -2,21 +2,34 @@ import axios from 'axios';
 
 // PART 1: Show Dog Photo
 
-function showDogPhoto(evt) {
-  // TODO: get a random photo from the Dog API and show it in the #dog-image div
+async function showDogPhoto(evt) {
+  const response = await axios.get('https://dog.ceo/api/breeds/image/random');
+  //this code sets a var named response to the api request for dog images
+  const imageUrl = response.data.message;
+  //this code sets a var named imageURl to the previous var response that filters through it via data.message
+  document.querySelector('#dog-image').innerHTML = `<img src=${imageUrl}>`;
+  //this a query selector that will display the image of the url of the dog api
 }
 
 document.querySelector('#get-dog-image').addEventListener('click', showDogPhoto);
+//on this event listener, when the get-dog-image is clicked, the function showDogPhoto will run
 
 // PART 2: Show Weather
 
-function showWeather(evt) {
-  const zipcode = document.querySelector('#zipcode-field').value;
-
+async function showWeather(evt) {
   // TODO: request weather with that URL and show the forecast in #weather-info
+  const zipcode = document.querySelector('#zipcode-field').value;
+  //zipcode is a var that is set to the query selector of the text box where you input the zipcode. .value has to do with numbers
+  const url = `/weather.txt?zipcode=${zipcode}`;
+  //url is a var that will be a link and whatever the zipcode inserted is
+  const response = await axios.get(url);
+  //response is a var that uses axios to get the url
+  document.querySelector("#weather-info").innerText = response.data
+  //this a query selctor that will put  the inner text to whatever response.data is
 }
 
 document.querySelector('#weather-button').addEventListener('click', showWeather);
+//this a query selector , when the weather button is clicked, the function showWeather will run
 
 // PART 3: Order Cookies
 
