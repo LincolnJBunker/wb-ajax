@@ -25,7 +25,9 @@ app.get('/', (req, res) => {
 app.get('/weather.txt', (req, res) => {
   const zipcode = req.query.zipcode;
   // TODO: Get the weather for this zipcode and return the forecast if available.
+  //I get the req.query, that's what you gotta do with get requests. but where's the .zipcode coming from ? is that for the var zipcode?
   const weather = WEATHER[zipcode];
+  console.log(weather)
   if (weather) {
     res.send(weather.forecast)
   } else {

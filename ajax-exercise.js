@@ -3,12 +3,13 @@ import axios from 'axios';
 // PART 1: Show Dog Photo
 
 async function showDogPhoto(evt) {
-  const response = await axios.get('https://dog.ceo/api/breeds/image/random');
   //this code sets a var named response to the api request for dog images
-  const imageUrl = response.data.message;
+  const response = await axios.get("https://dog.ceo/api/breeds/image/random");
   //this code sets a var named imageURl to the previous var response that filters through it via data.message
-  document.querySelector('#dog-image').innerHTML = `<img src=${imageUrl}>`;
+  console.log(response)
+  const imageurl = response.data.message;
   //this a query selector that will display the image of the url of the dog api
+  document.querySelector("#dog-image").innerHTML = `<img src="${imageurl}">`;
 }
 
 document.querySelector('#get-dog-image').addEventListener('click', showDogPhoto);
@@ -24,6 +25,7 @@ async function showWeather(evt) {
   //url is a var that will be a link and whatever the zipcode inserted is
   const response = await axios.get(url);
   //response is a var that uses axios to get the url
+  console.log(response)
   document.querySelector("#weather-info").innerText = response.data
   //this a query selctor that will put  the inner text to whatever response.data is
 }
@@ -49,7 +51,9 @@ async function orderCookies(evt) {
   // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
   const orderStatus = document.querySelector("#order-status")
   orderStatus.innerText = response.data.message;
+  console.log(response.data)
   if (response.data.resultCode === 'ERROR'){
+    //how does resultCode know whether it's 0 or negative ? where does resultCode come from ??
     orderStatus.classList.add('order-error');
   } else {
     orderStatus.classList.remove('order-error')
@@ -76,6 +80,6 @@ async function iTunesSearch(evt) {
     displayStr += `<li>Artist:${result.artistName} Song: ${result.trackName}</li>`
     console.log(response.data)
   }
-  document.querySelector("#itunes-results").innerText = displayStr
+  document.querySelector("#itunes-results").innerHTML = displayStr
 }
 document.querySelector('#itunes-search-form').addEventListener('submit', iTunesSearch);
